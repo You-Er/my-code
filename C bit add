@@ -1,0 +1,16 @@
+#include<stdio.h>
+int add(int a,int b)
+{
+	if(b==0)return a;
+	else return add(a^b,((~(a^b))&(a|b))<<1);	
+}
+int main()
+{
+	int a,b;
+	printf("请输入要相加的第一个数a:");
+	scanf("%d",&a);
+	printf("请输入要相加的第二个数b:");
+	scanf("%d",&b);
+	printf("\na+b=%d",add(a,b));
+	return 0;
+}
