@@ -1,0 +1,55 @@
+assume cs:code,ds:data
+data segment
+	db 'welcome to masm!'
+data ends
+
+code segment
+
+start:
+	;必须为偶数开头,因为低位地址才为ASCII码,高地址为属性,而且以偶数开头
+	mov ax,0B800h 
+	mov ds,ax
+	mov ax,data
+	mov es,ax
+	mov bx,720h
+	mov al,01110010b
+	mov cx,10h
+	mov si,0h
+s:
+	mov dl,es:[si]
+	mov [bx],dl
+	inc bx
+	mov [bx],al
+	inc bx
+	inc si
+	loop s	
+	
+	mov al,00100100b
+	mov cx,10h
+	mov bx,7c0h
+	mov si,0h
+s1:
+
+	mov dl,es:[si]
+	mov [bx],dl
+	inc bx
+	mov [bx],al
+	inc bx
+	inc si
+	loop s1
+
+	mov al,00000001b
+	mov cx,10h
+	mov bx,860h
+	mov si,0h
+s2:
+
+	mov dl,es:[si]
+	mov [bx],dl
+	inc bx
+	mov [bx],al
+	inc bx
+	inc si
+	loop s2
+code ends
+end start
