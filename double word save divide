@@ -1,0 +1,25 @@
+assume cs:code
+
+code segment
+
+start:
+	mov ax,4240H
+	mov dx,000fH
+	mov cx,0ah
+	call divwd
+	mov ax,4c00h
+	int 21h
+divwd:
+	mov bx,ax	
+	mov ax,dx		;把高位降位处理,弄成高位为0的word
+	mov dx,0		;高位置零
+	div cx
+	push ax		;先不要把ax的数移到dx,后面还要用,用完再移到dx
+	mov ax,bx		;低位为原先ax的备份bx,高位用前面除完的余数作高位=rem(H/N)*65536,
+			;后面的65536就用高位抵消了
+	div cx
+	mov cx,dx
+	pop dx
+	ret
+code ends
+end start
